@@ -15,6 +15,7 @@ function Home() {
       <Hero />
       <FeaturedVideo />
       <S8ULSpotlight />
+
       <FoundersSection />
       <ContactSection />
       <Footer />

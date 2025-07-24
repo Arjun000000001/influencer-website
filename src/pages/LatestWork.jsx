@@ -1,32 +1,38 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const cards = [
+const videos = [
   {
-    title: "Montage 1",
-    video: "https://www.w3schools.com/html/mov_bbb.mp4",
-    description: "High energy gameplay",
+    title: "Gameplay Domination",
+    video: "https://www.youtube.com/embed/tS2LGPkTSSc",
+    description: "High-energy intense game highlights!",
   },
   {
-    title: "Montage 2",
-    video: "https://www.w3schools.com/html/movie.mp4",
-    description: "Fast-paced action",
+    title: "Unbelievable Comeback",
+    video: "https://www.youtube.com/embed/oUOFkcE091Y",
+    description: "Watch the clutch that shocked everyone!",
   },
   {
-    title: "Montage 3",
-    video: "https://www.w3schools.com/html/mov_bbb.mp4",
-    description: "Creative transitions",
+    title: "Sniping Masterclass",
+    video: "https://www.youtube.com/embed/ilpCGD2O4Zg",
+    description: "One-shot kills with precision and style.",
+  },
+  {
+    title: "Squad Wipe with Style",
+    video: "https://www.youtube.com/embed/OBeKopsFH04",
+    description: "Full squad eliminated in seconds!",
   },
 ];
 
 const LatestWork = () => {
   const gateLeft = useRef(null);
   const gateRight = useRef(null);
-  const cardRefs = useRef([]);
-  const fireRef = useRef(null);
+  const videoRefs = useRef([]);
+  const bgRef = useRef(null);
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     // Gate animation
@@ -41,26 +47,29 @@ const LatestWork = () => {
       duration: 1.2,
       ease: "power2.inOut",
       onComplete: () => {
-        cardRefs.current.forEach((card, i) => {
+        setShowContent(true);
+        videoRefs.current.forEach((video, i) => {
           gsap.fromTo(
-            card,
-            { rotationY: 180, opacity: 0, y: 100 },
+            video,
+            { opacity: 0, y: 50, scale: 0.95, filter: "blur(10px)" },
             {
-              rotationY: 0,
               opacity: 1,
               y: 0,
-              duration: 1,
-              delay: i * 0.3,
-              ease: "back.out(1.7)",
+              scale: 1,
+              filter: "blur(0px)",
+              duration: 1.4,
+              delay: i * 0.4,
+              ease: "power2.out",
             }
           );
         });
       },
     });
 
-    gsap.to(fireRef.current, {
+    // Animated Background
+    gsap.to(bgRef.current, {
       backgroundPosition: "1000% 0",
-      duration: 20,
+      duration: 30,
       repeat: -1,
       ease: "linear",
     });
@@ -70,16 +79,17 @@ const LatestWork = () => {
     <section
       style={{
         position: "relative",
-        height: "100vh",
+        minHeight: "100vh",
         background: "#000",
         overflow: "hidden",
         color: "#fff",
-        fontFamily: "sans-serif",
+        fontFamily: "Poppins, sans-serif",
+        padding: "4rem 1rem",
       }}
     >
-      {/* 🔥 Fire BG */}
+      {/* 🔥 Chaos BG */}
       <div
-        ref={fireRef}
+        ref={bgRef}
         style={{
           position: "absolute",
           top: 0,
@@ -96,107 +106,110 @@ const LatestWork = () => {
         }}
       />
 
-      {/* ⛩️ Gate */}
+      {/* ⛩️ Gates */}
       <div
         ref={gateLeft}
         style={{
           position: "absolute",
           width: "50%",
           height: "100%",
-          background: "#1a1a1a",
+          background: "#111",
           left: 0,
           top: 0,
           zIndex: 2,
         }}
-      ></div>
+      />
       <div
         ref={gateRight}
         style={{
           position: "absolute",
           width: "50%",
           height: "100%",
-          background: "#1a1a1a",
+          background: "#111",
           right: 0,
           top: 0,
           zIndex: 2,
         }}
-      ></div>
+      />
 
-      {/* 🃏 Cards with 3D perspective */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 3,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%",
-          gap: "2rem",
-          flexWrap: "wrap",
-          perspective: "1000px", // 👈 Key for 3D effect
-        }}
-      >
-        {cards.map((card, index) => (
+      {/* 🎥 Influencer Videos */}
+      {showContent && (
+        <div
+          style={{
+            position: "relative",
+            zIndex: 3,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "3.5rem",
+          }}
+        >
+          {videos.map((video, index) => (
+            <div
+              key={index}
+              ref={(el) => (videoRefs.current[index] = el)}
+              style={{
+                width: "90%",
+                maxWidth: "800px",
+                borderRadius: "16px",
+                overflow: "hidden",
+                background: "rgba(255, 255, 255, 0.03)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                boxShadow: "0 0 30px rgba(255, 255, 255, 0.06)",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.02)";
+                e.currentTarget.style.boxShadow =
+                  "0 0 40px rgba(255, 255, 255, 0.2)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.boxShadow =
+                  "0 0 30px rgba(255, 255, 255, 0.06)";
+              }}
+            >
+              <iframe
+                width="100%"
+                height="450"
+                src={video.video}
+                title={video.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+              <div style={{ padding: "1rem" }}>
+                <h3
+                  style={{
+                    fontSize: "1.5rem",
+                    marginBottom: "0.5rem",
+                    color: "#fff",
+                  }}
+                >
+                  {video.title}
+                </h3>
+                <p style={{ fontSize: "1rem", opacity: 0.8 }}>
+                  {video.description}
+                </p>
+              </div>
+            </div>
+          ))}
+
+          {/* 🧩 Glowing Divider Line */}
           <div
-            key={index}
-            ref={(el) => (cardRefs.current[index] = el)}
             style={{
-              width: "300px",
-              height: "350px",
-              background: "#111",
-              borderRadius: "16px",
-              boxShadow: "0 0 25px rgba(255, 255, 255, 0.15)",
-              padding: "1rem",
-              transformStyle: "preserve-3d",
-              transform: "rotateY(180deg)",
-              opacity: 0,
-              cursor: "pointer",
-              transition: "transform 0.5s ease",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              marginTop: "5rem",
+              width: "100%",
+              height: "3px",
+              background:
+                "linear-gradient(to right, transparent, #fff 50%, transparent)",
+              filter: "blur(2px)",
+              opacity: 0.3,
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateZ(-100px) scale(0.95)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateZ(0px) scale(1)";
-            }}
-          >
-            <video
-              src={card.video}
-              style={{
-                width: "100%",
-                height: "70%",
-                borderRadius: "10px",
-                objectFit: "cover",
-              }}
-              muted
-              autoPlay
-              loop
-            />
-            <h3
-              style={{
-                fontSize: "1.2rem",
-                marginTop: "0.8rem",
-                marginBottom: "0.3rem",
-                textAlign: "center",
-              }}
-            >
-              {card.title}
-            </h3>
-            <p
-              style={{
-                fontSize: "0.9rem",
-                opacity: 0.7,
-                textAlign: "center",
-              }}
-            >
-              {card.description}
-            </p>
-          </div>
-        ))}
-      </div>
+          ></div>
+        </div>
+      )}
     </section>
   );
 };

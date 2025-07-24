@@ -1,104 +1,118 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { v4 as uuidv4 } from "uuid";
+
+// Hover Sound
+const hoverSoundUrl = "https://www.fesliyanstudios.com/play-mp3/387";
 
 export default function FuturisticContactForm() {
-  const containerRef = useRef(null);
+  const formRef = useRef(null);
+  const bgRef = useRef(null);
+  const audioRef = useRef(null);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
 
-  // Create random objects on mount
   useEffect(() => {
-    const numObjects = 20;
-    const container = containerRef.current;
-    const objects = [];
+    // 3D Flip Animation for form
+    gsap.fromTo(
+      formRef.current,
+      {
+        opacity: 0,
+        rotateY: -90,
+        transformOrigin: "left center",
+        x: -100,
+      },
+      {
+        opacity: 1,
+        rotateY: 0,
+        x: 0,
+        duration: 1.5,
+        ease: "power4.out",
+      }
+    );
 
-    for (let i = 0; i < numObjects; i++) {
-      const obj = document.createElement("div");
-      obj.classList.add("floating-object");
-      obj.style.position = "absolute";
-      obj.style.width = `${Math.random() * 20 + 10}px`;
-      obj.style.height = obj.style.width;
-      obj.style.borderRadius = Math.random() > 0.5 ? "50%" : "10%";
-      obj.style.backgroundColor = `hsla(${Math.random() * 360}, 100%, 70%, 0.7)`;
-      obj.style.left = `${Math.random() * 100}%`;
-      obj.style.top = `${Math.random() * 100}%`;
-
-      container.appendChild(obj);
-      objects.push(obj);
-    }
-
-    // Animate objects
-    objects.forEach((obj) => {
-      const dx = Math.random() * 100 + 50;
-      const dy = Math.random() * 100 + 50;
-      const duration = Math.random() * 8 + 4;
-
-      gsap.to(obj, {
-        x: `+=${Math.random() > 0.5 ? dx : -dx}`,
-        y: `+=${Math.random() > 0.5 ? dy : -dy}`,
-        repeat: -1,
-        yoyo: true,
-        duration,
-        ease: "power1.inOut",
-      });
+    // Particle background animation (rotate and scale pulse)
+    gsap.to(bgRef.current, {
+      rotate: 360,
+      scale: 1.2,
+      repeat: -1,
+      yoyo: true,
+      duration: 8,
+      ease: "power2.inOut",
     });
-
-    return () => {
-      objects.forEach((obj) => obj.remove());
-    };
   }, []);
 
-  // Handle form data
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Message sent!");
+    alert("Message Sent Successfully!");
   };
 
   return (
     <div
-      ref={containerRef}
       style={{
         width: "100vw",
         height: "100vh",
         overflow: "hidden",
         position: "relative",
-        background: "radial-gradient(circle at center, #020024, #090979, #000000)",
+        background: "radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        perspective: "1200px",
       }}
     >
+      {/* 🔊 Sound Effect */}
+      <audio ref={audioRef} src={hoverSoundUrl} preload="auto" />
+
+      {/* ✨ Particle Background */}
+      <div
+        ref={bgRef}
+        style={{
+          position: "absolute",
+          width: "150vmax",
+          height: "150vmax",
+          backgroundImage: "radial-gradient(#00ffff33 2px, transparent 2px)",
+          backgroundSize: "40px 40px",
+          opacity: 0.04,
+          zIndex: 1,
+          filter: "blur(1px)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* 📩 Contact Form */}
       <form
+        ref={formRef}
         onSubmit={handleSubmit}
         style={{
+          zIndex: 10,
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
-          backgroundColor: "rgba(255, 255, 255, 0.05)",
-          padding: "30px",
-          borderRadius: "12px",
-          width: "300px",
-          border: "2px solid rgba(255, 255, 255, 0.3)",
-          boxShadow: "0 0 15px #00ffffaa",
+          gap: "16px",
+          background: "rgba(0, 0, 0, 0.6)",
+          padding: "35px",
+          borderRadius: "15px",
+          border: "1px solid #00ffff55",
+          boxShadow: "0 0 25px #00ffff33",
+          color: "white",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
-          color: "white",
-          zIndex: 10,
-          transition: "all 0.3s ease-in-out",
+          width: "320px",
+          transition: "all 0.3s ease",
+          transformStyle: "preserve-3d",
         }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = "0 0 25px #00ffff";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = "0 0 15px #00ffffaa";
+        onMouseEnter={() => {
+          if (audioRef.current) {
+            audioRef.current.currentTime = 0;
+            audioRef.current.play();
+          }
         }}
       >
         <h2 style={{ textAlign: "center", color: "#00ffff", marginBottom: "10px" }}>
@@ -141,7 +155,10 @@ export default function FuturisticContactForm() {
             borderRadius: "5px",
             cursor: "pointer",
             fontWeight: "bold",
+            transition: "transform 0.3s ease",
           }}
+          onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+          onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
         >
           Send
         </button>
@@ -150,14 +167,14 @@ export default function FuturisticContactForm() {
   );
 }
 
-// Input field style
+// ✏️ Input Style
 const inputStyle = {
   padding: "10px",
   borderRadius: "5px",
-  border: "1px solid #aaa",
+  border: "1px solid #00ffff44",
+  backgroundColor: "rgba(255, 255, 255, 0.05)",
+  color: "#fff",
   outline: "none",
   fontSize: "14px",
-  backgroundColor: "rgba(255, 255, 255, 0.1)",
-  color: "white",
-  backdropFilter: "blur(5px)",
+  backdropFilter: "blur(4px)",
 };

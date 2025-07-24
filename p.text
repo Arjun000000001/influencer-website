@@ -10,15 +10,15 @@ const Footer = () => {
   useEffect(() => {
     gsap.fromTo(
       footerRef.current,
-      { opacity: 0, y: 80 },
+      { opacity: 0, y: 100 },
       {
         opacity: 1,
         y: 0,
-        duration: 1,
+        duration: 1.2,
         ease: "power3.out",
         scrollTrigger: {
           trigger: footerRef.current,
-          start: "top 85%",
+          start: "top 90%",
         },
       }
     );
@@ -28,8 +28,8 @@ const Footer = () => {
     <footer
       ref={footerRef}
       style={{
-        backgroundColor: "#0c0c0c",
-        color: "#ccc",
+        backgroundColor: "#0f0f0f",
+        color: "#999",
         padding: "3rem 2rem 1rem",
         fontFamily: "'Poppins', sans-serif",
       }}
@@ -39,62 +39,71 @@ const Footer = () => {
           maxWidth: "1200px",
           margin: "0 auto",
           display: "flex",
+          justifyContent: "space-between",
           flexWrap: "wrap",
           gap: "2rem",
-          justifyContent: "space-between",
         }}
       >
-        {/* Left: Logo and About */}
+        {/* 🧠 Left Logo + About */}
         <div style={{ flex: "1 1 250px", minWidth: "250px" }}>
           <img
             src="https://s8ul.gg/img/logo.webp"
             alt="S8UL Logo"
-            style={{ width: "90px", marginBottom: "1rem" }}
+            style={{ width: "80px", marginBottom: "1rem" }}
           />
-          <p style={{ fontSize: "0.9rem", lineHeight: "1.6", color: "#888" }}>
-            S8UL is a global name in esports and gaming content, based in Mumbai, India.
+          <p style={{ fontSize: "0.9rem", lineHeight: "1.6", color: "#666" }}>
+            S8UL is a global name in esports and gaming content, headquartered in Mumbai, India.
           </p>
-          <p style={{ color: "#fff", fontWeight: "600", marginTop: "1rem" }}>
+          <p style={{ fontWeight: "600", marginTop: "1rem", color: "white" }}>
             connect@s8ul.gg
           </p>
 
-          {/* Social Icons */}
-          <div style={{ display: "flex", gap: "1rem", marginTop: "1.2rem" }}>
-            {socialIcon("https://cdn-icons-png.flaticon.com/512/733/733579.png", "https://twitter.com/s8ul")}
-            {socialIcon("https://cdn-icons-png.flaticon.com/512/174/174857.png", "https://linkedin.com/company/s8ul")}
-            {socialIcon("https://cdn-icons-png.flaticon.com/512/2111/2111463.png", "https://instagram.com/s8ul")}
+          {/* 🔗 Social Icons */}
+          <div style={{ marginTop: "1rem", display: "flex", gap: "1rem" }}>
+            {socialIcon(
+              "https://upload.wikimedia.org/wikipedia/commons/6/6f/Font_Awesome_5_brands_twitter.svg",
+              "https://twitter.com/s8ul"
+            )}
+            {socialIcon(
+              "https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png",
+              "https://linkedin.com/company/s8ul"
+            )}
+            {socialIcon(
+              "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg",
+              "https://instagram.com/s8ul"
+            )}
           </div>
         </div>
 
-        {/* Navigation Links */}
-        <div style={{ flex: "1 1 180px", minWidth: "180px" }}>
-          <h3 style={headingStyle}>Explore</h3>
-          <ul style={{ listStyle: "none", padding: 0, lineHeight: "2" }}>
-            {["Home", "About Us", "Shop", "Media", "Players", "Contact Us"].map((text, i) => (
+        {/* 🧭 Navigation Links */}
+        <div style={{ flex: "1 1 150px", minWidth: "150px" }}>
+          <h3 style={headingStyle}>About S8UL</h3>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0, lineHeight: "2" }}>
+            {["Home", "About Us", "Shop", "Media", "Players", "Contact Us"].map((link, i) => (
               <li key={i}>
-                <a href={`/${text.toLowerCase().replace(/\s/g, "")}`} style={linkStyle}>
-                  {text}
+                <a href={`/${link.replace(/\s/g, "").toLowerCase()}`} style={linkStyle}>
+                  {link}
                 </a>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Subscribe Section */}
+        {/* 📩 Subscribe Section */}
         <div style={{ flex: "1 1 300px", minWidth: "300px" }}>
-          <h3 style={headingStyle}>Stay Updated</h3>
-          <p style={{ fontSize: "0.9rem", marginBottom: "1rem", color: "#aaa" }}>
-            Drop your email to get all the latest updates.
+          <h3 style={headingStyle}>Subscribe</h3>
+          <p style={{ fontSize: "0.9rem", marginBottom: "1rem" }}>
+            Don’t miss updates. Drop your email & stay connected.
           </p>
           <form style={{ display: "flex" }}>
             <input
               type="email"
-              placeholder="Enter email"
+              placeholder="Email Address"
               style={{
                 flex: 1,
                 padding: "0.75rem 1rem",
-                border: "none",
                 borderRadius: "6px 0 0 6px",
+                border: "none",
                 outline: "none",
                 fontSize: "1rem",
               }}
@@ -102,11 +111,11 @@ const Footer = () => {
             <button
               type="submit"
               style={{
-                backgroundColor: "#00ff88",
+                backgroundColor: "#00FF55",
                 border: "none",
-                padding: "0 1.5rem",
-                borderRadius: "0 6px 6px 0",
+                padding: "0 1.2rem",
                 cursor: "pointer",
+                borderRadius: "0 6px 6px 0",
               }}
             >
               <svg
@@ -123,27 +132,28 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Section */}
+      {/* 🧾 Copyright */}
       <div
         style={{
           borderTop: "1px solid #222",
           marginTop: "2rem",
           paddingTop: "1rem",
           fontSize: "0.8rem",
+          color: "#555",
           display: "flex",
           justifyContent: "space-between",
           flexWrap: "wrap",
           maxWidth: "1200px",
           marginLeft: "auto",
           marginRight: "auto",
-          color: "#666",
+          gap: "1rem",
         }}
       >
         <p>© 2025 S8UL. All rights reserved.</p>
         <div style={{ display: "flex", gap: "1rem" }}>
-          {["Terms", "Privacy", "Refund", "Contact"].map((txt, i) => (
-            <a key={i} href={`/${txt.toLowerCase()}`} style={footerLink}>
-              {txt}
+          {["About", "Terms", "Privacy", "Shipping", "Refund", "Contact"].map((text, i) => (
+            <a key={i} href={`/${text.toLowerCase()}`} style={footerLink}>
+              {text}
             </a>
           ))}
         </div>
@@ -152,25 +162,25 @@ const Footer = () => {
   );
 };
 
-// Social Icon Reusable
-function socialIcon(src, link) {
+// 🔗 Social Icon Component
+function socialIcon(src, href) {
   return (
     <a
-      href={link}
+      href={href}
       target="_blank"
-      rel="noreferrer"
-      style={{ display: "inline-block", transition: "transform 0.3s ease-in-out" }}
+      rel="noopener noreferrer"
+      style={{ display: "inline-block", transition: "0.3s" }}
       onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.2)")}
       onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
     >
-      <img src={src} alt="social-icon" style={{ width: "24px", height: "24px" }} />
+      <img src={src} alt="icon" style={{ width: "22px", height: "22px" }} />
     </a>
   );
 }
 
 const headingStyle = {
   color: "#fff",
-  fontSize: "1.1rem",
+  fontWeight: "700",
   marginBottom: "1rem",
 };
 
@@ -178,12 +188,12 @@ const linkStyle = {
   color: "#999",
   textDecoration: "none",
   fontSize: "0.9rem",
-  transition: "0.3s",
+  transition: "color 0.3s",
 };
 
 const footerLink = {
   ...linkStyle,
-  fontSize: "0.85rem",
+  fontSize: "0.8rem",
 };
 
 export default Footer;

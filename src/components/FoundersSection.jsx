@@ -34,18 +34,26 @@ export default function FoundersSection() {
     cardsRef.current.forEach((card, idx) => {
       gsap.fromTo(
         card,
-        { opacity: 0, y: 60, rotateX: 20 },
+        {
+          opacity: 0,
+          y: 60,
+          rotateX: 15,
+          scale: 0.94,
+        },
         {
           opacity: 1,
           y: 0,
           rotateX: 0,
-          duration: 1.4,
-          ease: "power4.out",
+          scale: 1,
+          duration: 1.1,
+          ease: "power3.out",
           scrollTrigger: {
             trigger: card,
             start: "top 85%",
+            end: "top 60%",
+            scrub: 0.3,
+            once: true,
           },
-          delay: idx * 0.15,
         }
       );
     });
@@ -53,9 +61,11 @@ export default function FoundersSection() {
 
   const handleMouseEnter = (idx) => {
     gsap.to(cardsRef.current[idx], {
-      rotateY: 10,
-      scale: 1.05,
-      duration: 0.5,
+      rotateY: 8,
+      rotateX: 4,
+      scale: 1.07,
+      boxShadow: "0 0 40px rgba(255,255,255,0.1), 0 0 60px #facc15",
+      duration: 0.4,
       ease: "power2.out",
     });
   };
@@ -63,43 +73,39 @@ export default function FoundersSection() {
   const handleMouseLeave = (idx) => {
     gsap.to(cardsRef.current[idx], {
       rotateY: 0,
+      rotateX: 0,
       scale: 1,
-      duration: 0.5,
+      boxShadow: "none",
+      duration: 0.4,
       ease: "power2.out",
     });
   };
 
   return (
-    <section className="bg-black text-gray-200 py-20 px-6 md:px-16 overflow-hidden">
-      <div className="max-w-6xl mx-auto text-left mb-14">
-        <h2 className="text-yellow-400 text-4xl md:text-5xl font-extrabold mb-4 tracking-wide drop-shadow-[0_0_20px_rgba(234,179,8,0.4)]">
-          🚀 Meet Our Founders
+    <section className="bg-gradient-to-b from-black to-gray-900 text-gray-100 py-24 px-6 md:px-16 overflow-hidden">
+      <div className="max-w-6xl mx-auto text-center mb-20">
+        <h2 className="text-yellow-400 text-5xl font-black tracking-wide drop-shadow-[0_0_30px_rgba(234,179,8,0.6)]">
+          ⚡ Founders of 2025
         </h2>
-        <p className="text-lg text-gray-400 max-w-2xl">
-          Visionaries behind India's esports revolution – driving innovation, gaming culture, and global dominance.
+        <p className="text-lg text-gray-400 mt-4 max-w-2xl mx-auto">
+          The minds redefining India's esports dominance with next-gen innovation and vision.
         </p>
       </div>
 
-      <div
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 max-w-6xl mx-auto"
-        style={{ perspective: "1200px" }}
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 max-w-6xl mx-auto">
         {founders.map((founder, idx) => (
           <div
             key={idx}
             ref={(el) => (cardsRef.current[idx] = el)}
             onMouseEnter={() => handleMouseEnter(idx)}
             onMouseLeave={() => handleMouseLeave(idx)}
-            className="relative group bg-white/10 backdrop-blur-xl rounded-2xl pt-20 pb-8 px-6 text-center text-white shadow-[0_0_30px_rgba(255,255,255,0.05)] border border-white/20 transition-transform duration-300 transform-style-preserve-3d cursor-pointer hover:shadow-yellow-500/30"
+            className="group relative bg-white/5 border border-white/20 backdrop-blur-[12px] rounded-3xl p-6 text-center shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] transition-all duration-500 overflow-hidden will-change-transform"
           >
-            {/* Glow Border on Hover */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-yellow-500/20 to-transparent blur-lg opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none"></div>
-
-            {/* Reflective Shine Layer */}
-            <div className="absolute top-0 left-0 w-full h-full rounded-2xl bg-gradient-to-tr from-white/10 via-transparent to-transparent pointer-events-none z-0" />
+            {/* Border Glow Layer */}
+            <div className="absolute inset-0 z-0 rounded-3xl bg-gradient-to-br from-yellow-500/10 to-yellow-300/5 blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
 
             {/* Profile Image */}
-            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-yellow-500 shadow-md z-10">
+            <div className="w-28 h-28 mx-auto rounded-full overflow-hidden border-4 border-yellow-400 shadow-yellow-300/50 shadow-lg mb-4 relative z-10">
               <img
                 src={founder.img}
                 alt={founder.name}
@@ -107,13 +113,18 @@ export default function FoundersSection() {
               />
             </div>
 
-            {/* Name + Bio */}
-            <h3 className="text-white font-semibold text-lg mt-6 mb-2 relative z-10">
+            {/* Name */}
+            <h3 className="text-white font-bold text-xl relative z-10">
               {founder.name}
             </h3>
-            <p className="text-sm text-gray-300 leading-relaxed relative z-10">
+
+            {/* Bio */}
+            <p className="text-sm text-gray-300 mt-2 relative z-10 leading-relaxed">
               {founder.bio}
             </p>
+
+            {/* Glow Ring */}
+            <div className="absolute -inset-1 z-0 rounded-3xl ring-2 ring-yellow-400/10 group-hover:ring-yellow-400/30 transition-all duration-500"></div>
           </div>
         ))}
       </div>

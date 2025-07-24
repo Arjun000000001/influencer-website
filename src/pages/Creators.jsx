@@ -5,15 +5,21 @@ import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 
 const cards = [
-  { title: "Mortal", img: "https://link-to-image" },
-  { title: "Scout", img: "https://link-to-image" },
-  { title: "8Bit Thug", img: "https://link-to-image" },
-  { title: "Viper", img: "https://link-to-image" },
-  { title: "Rega", img: "https://link-to-image" },
+  {
+    title: "Mortal",
+    img: "https://s8ul.gg/img/naman.webp",
+  },
+  { title: "Scout", img: "https://staticg.sportskeeda.com/editor/2023/02/44dd3-16756451153105-1920.jpg" },
+  {
+    title: "8Bit Thug",
+    img: "https://s8ul.gg/img/about.jpg",
+  },
+  { title: "Viper", img: "https://staticg.sportskeeda.com/editor/2023/05/07e16-16852420481688-1920.jpg" },
+  { title: "Rega", img: "https://aflencemedia.com/wp-content/uploads/2024/04/Regaltos-Featured-Image.png" },
 ];
 
 function getRandomStyle() {
-  const top = Math.random() * 80 + 5; // 5% to 85%
+  const top = Math.random() * 80 + 5;
   const left = Math.random() * 85 + 5;
   const rotate = Math.random() * 40 - 20;
   return { top: `${top}%`, left: `${left}%`, rotate };
@@ -116,15 +122,22 @@ function FloatingCards() {
                   }
             }
             transition={{ type: "spring", stiffness: 100, damping: 12 }}
-            className="absolute w-60 h-80 rounded-2xl border border-white/20 backdrop-blur-md bg-white/10 text-white overflow-hidden flex flex-col items-center justify-center cursor-pointer hover:shadow-[0_0_40px_#facc15]/80"
+            className="absolute w-60 h-80 rounded-2xl border border-white/20 backdrop-blur-md bg-white/10 text-white overflow-hidden flex flex-col cursor-pointer hover:shadow-[0_0_40px_#facc15]/80"
             style={{ transformOrigin: "center center" }}
           >
+            {/* Title on top */}
+            <div className="w-full bg-black/60 text-center py-2">
+              <h3 className="text-lg font-bold tracking-wide uppercase text-yellow-400">
+                {card.title}
+              </h3>
+            </div>
+
+            {/* Image fills rest of card */}
             <img
               src={card.img}
               alt={card.title}
-              className="w-full h-3/4 object-cover"
+              className="w-full h-full object-cover"
             />
-            <h3 className="text-xl font-semibold mt-2">{card.title}</h3>
           </motion.div>
         );
       })}

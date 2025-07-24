@@ -1,369 +1,215 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
-const allProducts = [
+const hoodieData = [
   {
     id: 1,
-    name: "Creeper T-Shirt",
-    category: "T-Shirts",
-    price: "₹699",
-    priceUSD: "$8.39",
-    desc: "Comfortable cotton tee with iconic creeper design.",
-    image: "https://via.placeholder.com/300x300?text=T-Shirt",
+    name: "Hoodie 1",
+    desc: "Warm and stylish hoodie for everyday wear.",
+    price: 1199,
+    category: "Hoodies",
+    image: "https://i.pinimg.com/736x/94/1d/9f/941d9fee290f2e088558f909aa84268a.jpg",
   },
   {
     id: 2,
-    name: "Gaming Hoodie",
-    category: "Hoodies",
-    price: "₹1199",
-    priceUSD: "$14.39",
-    desc: "Warm hoodie for gamers, night grind ready.",
-    image: "https://via.placeholder.com/300x300?text=Hoodie",
+    name: "Coord Set 1",
+    desc: "Sleek coord set perfect for matching style.",
+    price: 1599,
+    category: "Coord Set",
+    image: "https://i.pinimg.com/736x/c3/d5/d5/c3d5d5b8ff3e7007533833b461ff9c95.jpg",
   },
   {
     id: 3,
-    name: "Gamer Mousepad",
-    category: "Accessories",
-    price: "₹399",
-    priceUSD: "$4.79",
-    desc: "Precision surface for high-DPI performance.",
-    image: "https://via.placeholder.com/300x300?text=Mousepad",
+    name: "Hoodie 3",
+    desc: "Geeky coder vibes, soft cotton blend.",
+    price: 1399,
+    category: "Hoodies",
+    image: "https://i.pinimg.com/1200x/c9/73/8a/c9738ae44d4460db176c728736421b96.jpg",
   },
   {
     id: 4,
-    name: "Thug Cap",
-    category: "Accessories",
-    price: "₹299",
-    priceUSD: "$3.59",
-    desc: "Sleek black cap with embroidered thug logo.",
-    image: "https://via.placeholder.com/300x300?text=Cap",
+    name: "Coord Set 2",
+    desc: "Elegant and minimal, perfect for winter.",
+    price: 1899,
+    category: "Coord Set",
+    image: "https://i.pinimg.com/1200x/1f/0b/61/1f0b6175df77b8bac599db3ad62cb2f4.jpg",
   },
   {
     id: 5,
-    name: "Code Hoodie",
+    name: "Hoodie 5",
+    desc: "Dark hoodie with a premium build.",
+    price: 1499,
     category: "Hoodies",
-    price: "₹1299",
-    priceUSD: "$15.59",
-    desc: "Perfect for coders—soft, warm, and hacker style.",
-    image: "https://via.placeholder.com/300x300?text=Code+Hoodie",
+    image: "https://i.pinimg.com/1200x/78/0b/d1/780bd197686e404e443c0f07d4987297.jpg",
+  },
+  {
+    id: 6,
+    name: "Hoodie 6",
+    desc: "Street-style design in soft fleece.",
+    price: 1299,
+    category: "Hoodies",
+    image: "https://i.pinimg.com/1200x/4e/96/15/4e961510aa048d050c206bc317632306.jpg",
+  },
+  {
+    id: 7,
+    name: "New Hoodie",
+    desc: "Urban dark hoodie for bold vibes.",
+    price: 1699,
+    category: "Hoodies",
+    image: "https://i.pinimg.com/736x/60/65/ec/6065ec0df788d8535517d28307805116.jpg",
+  },
+  {
+    id: 8,
+    name: "Winter Coord",
+    desc: "Chic winter coord for cozy style.",
+    price: 2099,
+    category: "Coord Set",
+    image: "https://i.pinimg.com/736x/d1/c6/57/d1c657b131e571001fb4d513549b6082.jpg",
+  },
+  {
+    id: 9,
+    name: "Classic Hoodie",
+    desc: "Classic black hoodie for all seasons.",
+    price: 1399,
+    category: "Hoodies",
+    image: "https://i.pinimg.com/1200x/9d/c1/a4/9dc1a4d77396bc33c3adc14c8186f62c.jpg",
+  },
+  {
+    id: 10,
+    name: "Darkwear Hoodie",
+    desc: "Mystery-themed urban hoodie look.",
+    price: 1599,
+    category: "Hoodies",
+    image: "https://i.pinimg.com/736x/eb/f2/29/ebf2296607887b3eb26002c1f158e217.jpg",
   },
 ];
 
-function Store() {
-  const [filter, setFilter] = useState("All");
-  const containerRef = useRef(null);
-  const introTextRef = useRef(null);
-  const buttonRef = useRef(null);
-  const cardRefs = useRef([]);
-  const bgRef = useRef(null);
-
-  const filteredProducts =
-    filter === "All"
-      ? allProducts
-      : allProducts.filter((p) => p.category === filter);
+export default function ProductShowcase() {
+  const cardsRef = useRef([]);
+  const leftDoor = useRef(null);
+  const rightDoor = useRef(null);
+  const [showStore, setShowStore] = useState(false);
 
   useEffect(() => {
-    const text = introTextRef.current.innerText;
-    introTextRef.current.innerHTML = text
-      .split("")
-      .map((l) => `<span style="opacity:0">${l}</span>`)
-      .join("");
-
-    const spans = introTextRef.current.querySelectorAll("span");
-    gsap.to(spans, {
-      opacity: 1,
-      stagger: 0.05,
+    gsap.to(leftDoor.current, {
+      x: "-100%",
+      duration: 1.5,
       delay: 0.5,
-      ease: "power2.out",
-      onComplete: () => {
-        gsap.fromTo(
-          buttonRef.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 1 }
-        );
-      },
+      ease: "power2.inOut",
+    });
+
+    gsap.to(rightDoor.current, {
+      x: "100%",
+      duration: 1.5,
+      delay: 0.5,
+      ease: "power2.inOut",
+      onComplete: () => setShowStore(true),
     });
   }, []);
 
   useEffect(() => {
-    gsap.to(bgRef.current, {
-      backgroundPosition: "200% center",
-      duration: 25,
-      repeat: -1,
-      ease: "linear",
-    });
-  }, []);
-
-  const animateStoreCards = () => {
-    cardRefs.current.forEach((card, index) => {
-      if (card) {
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 100, rotateY: -90 },
-          {
-            opacity: 1,
-            y: 0,
-            rotateY: 0,
-            duration: 1,
-            delay: index * 0.15,
-            ease: "power3.out",
-          }
-        );
-      }
-    });
-  };
-
-  const handleEnter = () => {
-    gsap.to(containerRef.current, {
-      x: "-100vw",
-      duration: 1.2,
-      ease: "power2.inOut",
-      onComplete: animateStoreCards,
-    });
-  };
+    if (showStore) {
+      gsap.fromTo(
+        cardsRef.current,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out",
+        }
+      );
+    }
+  }, [showStore]);
 
   return (
     <div
-      ref={bgRef}
       style={{
-        overflow: "hidden",
+        background: "radial-gradient(circle at top, #0d0d0d, #1a1a1a 80%)",
         minHeight: "100vh",
-        background:
-          "linear-gradient(270deg, #0f0c29, #302b63, #24243e, #0f0c29)",
-        backgroundSize: "400% 400%",
+        width: "100vw",
+        overflow: "hidden",
         position: "relative",
+        padding: "40px 20px",
+        boxSizing: "border-box",
       }}
     >
-      <style>{`
-        @keyframes starry {
-          from { background-position: 0 0, 10px 10px; }
-          to { background-position: 1000px 1000px, 1010px 1010px; }
-        }
-      `}</style>
-
+      {/* GATE ANIMATION */}
       <div
-        ref={containerRef}
-        style={{ display: "flex", width: "200vw", transition: "none" }}
-      >
-        {/* INTRO SCREEN */}
+        ref={leftDoor}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "50%",
+          height: "100%",
+          backgroundColor: "#0f0f0f",
+          zIndex: 999,
+        }}
+      />
+      <div
+        ref={rightDoor}
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          width: "50%",
+          height: "100%",
+          backgroundColor: "#0f0f0f",
+          zIndex: 999,
+        }}
+      />
+
+      {/* PRODUCT GRID */}
+      {showStore && (
         <div
           style={{
-            width: "100vw",
-            minHeight: "100vh",
-            backgroundColor: "#000",
-            backgroundImage:
-              "radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px)",
-            backgroundSize: "20px 20px",
-            backgroundPosition: "0 0, 10px 10px",
-            animation: "starry 15s linear infinite",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            color: "#fff",
-            padding: "20px",
+            width: "100%",
+            maxWidth: "1400px",
+            margin: "0 auto",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+            gap: "24px",
           }}
         >
-          <h1
-            ref={introTextRef}
-            style={{
-              fontSize: "2.8rem",
-              textAlign: "center",
-              maxWidth: "600px",
-              fontWeight: "bold",
-              lineHeight: "1.5",
-              textShadow: "0 0 20px rgba(255,255,255,0.3)",
-            }}
-          >
-            Thug k Store me apka swagat hai
-          </h1>
-
-          <button
-            ref={buttonRef}
-            onClick={handleEnter}
-            style={{
-              opacity: 0,
-              marginTop: "40px",
-              padding: "15px 30px",
-              fontSize: "1.2rem",
-              border: "none",
-              borderRadius: "20px",
-              backdropFilter: "blur(10px)",
-              background: "rgba(255, 255, 255, 0.1)",
-              color: "#fff",
-              cursor: "pointer",
-              boxShadow: "0 0 15px rgba(255,255,255,0.4)",
-              transition: "0.3s ease",
-            }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.transform = "scale(1.05)")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.transform = "scale(1)")
-            }
-          >
-            Enter Store
-          </button>
-        </div>
-
-        {/* STORE SCREEN */}
-        <div
-          style={{
-            width: "100vw",
-            minHeight: "100vh",
-            padding: "60px 20px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            background:
-              "radial-gradient(circle at 20% 20%, #1e1e1e 0%, #000 100%)",
-            color: "#fff",
-          }}
-        >
-          <h1
-            style={{
-              fontSize: "3rem",
-              marginBottom: "20px",
-              textShadow: "2px 2px 10px rgba(255,255,255,0.2)",
-            }}
-          >
-            🛒 Welcome to Thug Store
-          </h1>
-
-          {/* Filters */}
-          <div
-            style={{
-              display: "flex",
-              gap: "15px",
-              marginBottom: "30px",
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
-            {["All", "T-Shirts", "Hoodies", "Accessories"].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
+          {hoodieData.map((item, index) => (
+            <div
+              key={item.id}
+              ref={(el) => (cardsRef.current[index] = el)}
+              style={{
+                backgroundColor: "#1e1e1e",
+                borderRadius: "16px",
+                padding: "16px",
+                boxShadow: "0 6px 20px rgba(0,0,0,0.5)",
+                color: "#fff",
+                opacity: 0,
+                transform: "translateY(50px)",
+              }}
+            >
+              <img
+                src={item.image}
+                alt={item.name}
                 style={{
-                  padding: "8px 18px",
-                  borderRadius: "15px",
-                  border: "none",
-                  background:
-                    filter === cat
-                      ? "rgba(255,255,255,0.2)"
-                      : "rgba(255,255,255,0.1)",
-                  color: "#fff",
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                  transition: "0.2s",
+                  width: "100%",
+                  height: "260px",
+                  objectFit: "cover",
+                  borderRadius: "12px",
+                  marginBottom: "12px",
                 }}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {/* Product Cards */}
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              gap: "30px",
-            }}
-          >
-            {filteredProducts.map((product, index) => (
-              <div
-                key={product.id}
-                ref={(el) => (cardRefs.current[index] = el)}
-                style={{
-                  background: "linear-gradient(145deg, #1a1a1a, #2b2b2b)",
-                  borderRadius: "20px",
-                  padding: "20px",
-                  boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-                  textAlign: "center",
-                  width: "260px",
-                  color: "#fff",
-                  transformStyle: "preserve-3d",
-                  transition: "transform 0.4s ease, box-shadow 0.4s ease",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  position: "relative",
-                  overflow: "hidden",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "scale(1.07) rotateY(3deg)";
-                  e.currentTarget.style.boxShadow =
-                    "0 20px 40px rgba(0,0,0,0.7)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "scale(1) rotateY(0)";
-                  e.currentTarget.style.boxShadow =
-                    "0 10px 30px rgba(0,0,0,0.5)";
-                }}
-              >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  style={{
-                    width: "100%",
-                    borderRadius: "15px",
-                    marginBottom: "15px",
-                  }}
-                />
-                <h3 style={{ fontSize: "1.2rem", marginBottom: "5px" }}>
-                  {product.name}
-                </h3>
-                <p
-                  style={{
-                    fontSize: "0.9rem",
-                    color: "#aaa",
-                    marginBottom: "10px",
-                  }}
-                >
-                  {product.desc}
-                </p>
-                <p
-                  style={{
-                    fontWeight: "bold",
-                    marginBottom: "10px",
-                    color: "#fff",
-                  }}
-                >
-                  {product.price} /{" "}
-                  <span style={{ color: "#7fffd4" }}>{product.priceUSD}</span>
-                </p>
-                <button
-                  style={{
-                    padding: "10px 20px",
-                    background: "linear-gradient(to right, #ff416c, #ff4b2b)",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "25px",
-                    cursor: "pointer",
-                    fontWeight: "bold",
-                    boxShadow: "0 5px 15px rgba(255,75,43,0.4)",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "scale(1.05)";
-                    e.currentTarget.style.boxShadow =
-                      "0 8px 20px rgba(255,75,43,0.6)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "scale(1)";
-                    e.currentTarget.style.boxShadow =
-                      "0 5px 15px rgba(255,75,43,0.4)";
-                  }}
-                >
-                  Buy Now
-                </button>
-              </div>
-            ))}
-          </div>
+              />
+              <h3 style={{ fontSize: "1.25rem", marginBottom: "6px" }}>{item.name}</h3>
+              <p style={{ fontSize: "0.9rem", opacity: 0.8 }}>{item.desc}</p>
+              <p style={{ fontSize: "0.85rem", color: "#aaa", marginTop: "4px" }}>
+                Category: {item.category}
+              </p>
+              <p style={{ fontWeight: "bold", color: "#00ffaa", marginTop: "8px" }}>
+                ₹{item.price} / ${(item.price * 0.012).toFixed(2)} USD
+              </p>
+            </div>
+          ))}
         </div>
-      </div>
+      )}
     </div>
   );
 }
-
-export default Store;
